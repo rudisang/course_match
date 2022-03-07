@@ -11,6 +11,7 @@
     <style>
         body{
             background-color: #f5f5f5;
+            font-family: 'Nunito', sans-serif;
         }
 
         .no-border{
@@ -45,6 +46,7 @@
             background-color: #e9e9e9;
             color: #212529;
             border-radius:5px;
+            cursor:pointer;
         }
 
         .side-active{
@@ -64,7 +66,15 @@
                 <li class="mb-1"><a class="side-item {{ request()->is('dashboard') ? 'side-active' : '' }}" href="{{route('dashboard')}}">Dashboard</a></li>
                 <li class="mb-1"><a class="side-item {{ request()->is('dashboard/my-grades') ? 'side-active' : '' }}" href="{{route('mygrades')}}">My Grades</a></li>
                 <li class="mb-1"><a class="side-item" href="{{route('dashboard')}}">Settings</a></li>
-                <li class="mb-1"><a class="side-item" href="{{route('dashboard')}}">Logout</a></li>
+                <li class="mb-1"><form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <a class="side-item" :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                  </a>
+                </form></li>
             </ul>
             
         </div>
