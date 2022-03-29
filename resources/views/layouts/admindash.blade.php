@@ -14,6 +14,8 @@
             font-family: 'Nunito', sans-serif;
         }
 
+        
+
         .no-border{
             border: none;
         }
@@ -42,18 +44,6 @@
             border-bottom:1px solid transparent;
         }
 
-        .btn-filter{
-            border:1px solid rgb(255, 217, 0); 
-            transition: ease-in-out .5s;
-        }
-
-        .btn-filter:hover{
-            background-color: rgb(255, 217, 0);
-            color:rgb(255, 255, 255);
-            font-weight:bold;
-            transition: ease-in-out .5s;
-        }
-
         .side-item:hover{
             background-color: #e9e9e9;
             color: #212529;
@@ -76,7 +66,7 @@
             <!---Sidebar-->
             <ul class="side-menu">
                 <li class="mb-1"><a class="side-item {{ request()->is('dashboard') ? 'side-active' : '' }}" href="{{route('dashboard')}}">Dashboard</a></li>
-                <li class="mb-1"><a class="side-item {{ request()->is('dashboard/my-grades') ? 'side-active' : '' }}" href="{{route('mygrades')}}">My Grades</a></li>
+                <li class="mb-1"><a class="side-item {{ request()->is('admin/programs') ? 'side-active' : '' }}" href="{{route('programs')}}">Programs</a></li>
                 <li class="mb-1"><a class="side-item" href="{{route('dashboard')}}">Settings</a></li>
                 <li class="mb-1"><form method="POST" action="{{ route('logout') }}">
                     @csrf

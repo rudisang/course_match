@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CandidateGrades;
+use App\Models\Program;
 
 class DashboardController extends Controller
 {
@@ -66,6 +67,7 @@ class DashboardController extends Controller
 
     public function storeGrades(Request $request)
     {
+       
 
         $grade = new CandidateGrades();
         $grade->subject = $request->subject_one;
@@ -135,5 +137,10 @@ class DashboardController extends Controller
         $gradei->save();
 
         return redirect()->route('mygrades')->with('success', 'Grade added successfully');
+    }
+
+    public function showProgram($id){
+        $program = Program::with('requirements')->find($id);
+        return view('dashboard.student-views.program.show', compact('program'));
     }
 }

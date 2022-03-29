@@ -18,7 +18,8 @@ class CreateProgramsTable extends Migration
             $table->string('type');
             $table->string('degree')->nullable();
             $table->string('name');
-            $table->string('description');
+            $table->string('faculty');
+            $table->text('description');
             $table->integer('duration');
             $table->integer('min_points');
             $table->timestamps();
