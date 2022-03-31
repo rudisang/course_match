@@ -11,7 +11,7 @@
 
 @section('content')
     @if($points < $program->min_points)
-    <div class="mt-2 mb-t alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="mt-2 mb-t alert alert-danger alert-dismissible fade show" role="alert">
         You Don't Have The Required POINTS To Apply For This Program.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

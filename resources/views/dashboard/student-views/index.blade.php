@@ -32,6 +32,14 @@
                   <div class="col col-sm-12 col-md-4 mt-3">
                     <div class="card no-border rounded" style="background:rgb(240, 240, 240)">
                       <div class="card-body">
+                        
+                        @if ($points > $program->min_points)
+                        <div style="background:rgba(0, 248, 0, 0.849);width:20px;height:20px;border-radius:50%"></div>
+         
+                        @else
+                        <div style="background:rgba(255, 0, 0, 0.897);width:20px;height:20px;border-radius:50%"></div>
+                        @endif
+
                         <h5 class="card-title"><strong>{{$program->degree}} ({{$program->name}})</strong></h5>
                         <h6 class="card-subtitle mb-2 text-muted" style="text-transform: capitalize">{{$program->faculty}}</h6>
                         <p class="card-text">Min Points: {{$program->min_points}} <br/>  Duration: {{$program->duration}} years</p>

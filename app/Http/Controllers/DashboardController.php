@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CandidateGrades;
 use App\Models\Program;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -137,6 +138,21 @@ class DashboardController extends Controller
         $gradei->save();
 
         return redirect()->route('mygrades')->with('success', 'Grade added successfully');
+    }
+
+    public function dashboard(){
+        
+        if(auth()->user()->is_admin){
+            $programs = Program::all();
+            $users = User::all();
+            return view('dashboard.admin.index')->with('programs', $programs)->with('users', $users);
+        }else{
+            $points = $this->points();
+            $programs = Program::latest()->filter(
+                request(['search', 'category', 'author'])
+            )->paginate(18)->withQueryString();
+            return view('dashboard.student-views.index', compact('programs'))->with('points', $points);
+        }
     }
 
     public function showProgram($id){

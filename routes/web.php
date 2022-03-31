@@ -21,19 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    if(auth()->user()->is_admin){
-        $programs = Program::all();
-        $users = User::all();
-        return view('dashboard.admin.index')->with('programs', $programs)->with('users', $users);
-    }else{
-        $programs = Program::latest()->filter(
-            request(['search', 'category', 'author'])
-        )->paginate(18)->withQueryString();
-        return view('dashboard.student-views.index', compact('programs'));
-    }
-    
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
+
 
 //admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
