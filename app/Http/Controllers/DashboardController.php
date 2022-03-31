@@ -140,7 +140,39 @@ class DashboardController extends Controller
     }
 
     public function showProgram($id){
+        $points = $this->points();
         $program = Program::with('requirements')->find($id);
-        return view('dashboard.student-views.program.show', compact('program'));
+        return view('dashboard.student-views.program.show', compact('program'))->with('points', $points);
+    }
+
+    public function sortArr(){
+        $has_sda = false;
+        $points_array = [];
+        $sorted = auth()->user()->grades->sortByDesc('points');
+
+        foreach ($sorted as $grade) {
+            if($grade->subject == 'SDA'){
+                $has_sda = true;
+            }
+        }
+
+        
+        if($has_sda){
+            $points_array = $sorted->splice(5);
+          }else{
+            $points_array = $sorted->splice(6);
+          }
+
+         
+          return $sorted;
+
+    }
+
+    public function points(){
+        $points = 0;
+        foreach($this->sortArr() as $grades){
+            $points += $grades->points;
+        }
+        return $points;
     }
 }

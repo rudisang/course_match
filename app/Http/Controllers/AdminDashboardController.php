@@ -10,15 +10,23 @@ class AdminDashboardController extends Controller
 {
     //
 
+    
+
     public function allPrograms()
     {
+        if(auth()->user()->is_admin == false){
+            return redirect('/dashboard')->with('error', 'You are not authorized to view this page');
+        }else{
         $programs = Program::withCount('requirements')->get();
         return view('dashboard.admin.programs.index', compact('programs'));
-        
+        }
     }
 
     public function addProgram(Request $request)
     {
+        if(auth()->user()->is_admin == false){
+            return redirect('/dashboard')->with('error', 'You are not authorized to perform this action');
+        }else{
         //validate the data
         $this->validate($request, [
             'type' => 'required|string|max:255',
@@ -43,10 +51,14 @@ class AdminDashboardController extends Controller
         $program->save();
 
         return redirect('/admin/programs')->with('success', 'New Program Added');
+        }
     }
 
     public function addProgramRequirement(Request $request)
     {
+        if(auth()->user()->is_admin == false){
+            return redirect('/dashboard')->with('error', 'You are not authorized to view this page');
+        }else{
         //validate request
         $this->validate($request, [
             'program_id' => 'required',
@@ -63,5 +75,18 @@ class AdminDashboardController extends Controller
 
         //redirect to program requirements page
         return redirect('/admin/programs')->with('success', 'New Requirement Added');
+    }
+    }
+
+    public function destroyProgramRequirement($id)
+    {
+        if(auth()->user()->is_admin == false){
+            return redirect('/dashboard')->with('error', 'You are not authorized to view this page');
+        }else{
+        $program_requirement = ProgramRequirement::find($id);
+        $program_requirement->delete();
+
+        return redirect('/admin/programs')->with('success', 'Requirement Deleted');
+        }
     }
 }

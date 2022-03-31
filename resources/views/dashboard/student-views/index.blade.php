@@ -29,11 +29,11 @@
                   @endforeach
               </div>
                 @foreach ($programs as $program)
-                  <div class="col col-sm-12 col-md-4">
+                  <div class="col col-sm-12 col-md-4 mt-3">
                     <div class="card no-border rounded" style="background:rgb(240, 240, 240)">
                       <div class="card-body">
-                        <h5 class="card-title"><strong>{{$program->name}}</strong></h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Science</h6>
+                        <h5 class="card-title"><strong>{{$program->degree}} ({{$program->name}})</strong></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" style="text-transform: capitalize">{{$program->faculty}}</h6>
                         <p class="card-text">Min Points: {{$program->min_points}} <br/>  Duration: {{$program->duration}} years</p>
                         <a href="/dashboard/program/{{$program->id}}" class="card-link">view</a>
                       </div>

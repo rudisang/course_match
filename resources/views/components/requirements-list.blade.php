@@ -19,7 +19,12 @@
                         <br>
                         <a>Added: {{$requirement->created_at->diffForHumans()}}</a>
                         <br>
-                        <a><button class="btn btn-dark">delete</button></a>
+                        <a><form action="/admin/programs/{{$requirement->id}}/delete" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            
+                          <button type="submit" class="btn btn-dark">delete</button>  
+                        </form></a>
                     </li>
                     <hr>
                 @endforeach

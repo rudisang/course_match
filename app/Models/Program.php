@@ -30,7 +30,7 @@ class Program extends Model
 
         $query->when($filters['faculty'] ?? false, fn($query, $search) =>
             $query->where(fn($query) =>
-                $query->where('faculty', 'like', '%' . $search . '%')
+                $query->where('faculty', '=' . $search . '%')
                
             )
         );

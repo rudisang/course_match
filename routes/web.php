@@ -39,6 +39,7 @@ Route::get('/dashboard', function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     
     Route::get('/programs', [AdminDashboardController::class, 'allPrograms'])->name('programs');
+    Route::delete('/programs/{id}/delete', [AdminDashboardController::class, 'destroyProgramRequirement'])->name('deleterequirement');
     Route::post('/program/add', [AdminDashboardController::class, 'addProgram'])->name('addprogram');
     Route::post('/requirement/add', [AdminDashboardController::class, 'addProgramRequirement'])->name('addrequirement');
 });
