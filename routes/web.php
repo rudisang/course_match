@@ -30,6 +30,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/programs', [AdminDashboardController::class, 'allPrograms'])->name('programs');
     Route::delete('/programs/{id}/delete', [AdminDashboardController::class, 'destroyProgramRequirement'])->name('deleterequirement');
     Route::post('/program/add', [AdminDashboardController::class, 'addProgram'])->name('addprogram');
+    Route::get('/program/{id}/edit', [AdminDashboardController::class, 'editProgram'])->name('editprogram');
+    Route::patch('/program/{id}/update', [AdminDashboardController::class, 'updateProgram'])->name('updateprogram');
+    Route::delete('/program/{id}/delete', [AdminDashboardController::class, 'destroyProgram'])->name('deleteProgram');
+
     Route::post('/requirement/add', [AdminDashboardController::class, 'addProgramRequirement'])->name('addrequirement');
 });
 

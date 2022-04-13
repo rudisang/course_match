@@ -46,7 +46,11 @@
               </td>
               <td>
                 <a href="/admin/program/{{$program->id}}/edit" class="btn btn-warning">Edit</a>
-                <a href="/admin/program/{{$program->id}}/delete" class="btn btn-danger">Delete</a>
+                <form style="display: inline" action="/admin/program/{{$program->id}}/delete" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
               </td>
             </tr>
             
