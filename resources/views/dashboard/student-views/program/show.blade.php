@@ -7,9 +7,10 @@
     <li class="breadcrumb-item active" style="font-size:18px;font-weight:bold" aria-current="page">{{$program->name}}</li>
 
   </ol>
+  <a href="/dashboard/program/{{$program->id}}/download" class="btn btn-info">Generate PDF</a>
 @endsection
 
-@section('content')
+@section('content') 
     @if($points < $program->min_points)
     <div class="mt-2 mb-t alert alert-danger alert-dismissible fade show" role="alert">
         You Don't Have The Required POINTS To Apply For This Program.

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\CandidateGrades;
 use App\Models\Program;
 use App\Models\User;
+use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Facades\App;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class DashboardController extends Controller
 {
@@ -159,6 +163,24 @@ class DashboardController extends Controller
         $points = $this->points();
         $program = Program::with('requirements')->find($id);
         return view('dashboard.student-views.program.show', compact('program'))->with('points', $points);
+    }
+
+    public function makePDF($id){
+        $points = $this->points();
+        $program = Program::with('requirements')->find($id);
+        $html = view('pdf', compact('program'))->with('points', $points);
+       // return view('pdf', compact('program'))->with('points', $points);
+
+       //$pdf = PDF::loadHtml($html);
+        
+        //return $pdf->stream();
+
+        //$pdf = App::make('snappy.pdf.wrapper');
+        //dd($html);
+        //PDF::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf');
+       $pdf = PDF::loadView('pdf', compact('program'), compact('points'));
+      return $pdf->download('program.pdf');
+
     }
 
     public function sortArr(){

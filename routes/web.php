@@ -45,6 +45,8 @@ Route::get('/dashboard/my-grades', function () {
     return view('dashboard.student-views.mygrades.index');
 })->middleware(['auth'])->name('mygrades');
 
+Route::get('/dashboard/program/{id}/download', [DashboardController::class, 'makePDF'])->middleware(['auth'])->name('makePDF');
+
 Route::get('/dashboard/program/{id}', [DashboardController::class, 'showProgram'])->middleware(['auth'])->name('showprogram');
 Route::get('/dashboard/mygrades/add', [DashboardController::class, 'createGrades'])->middleware(['auth'])->name('addgrades');
 Route::post('/dashboard/mygrades/add', [DashboardController::class, 'storeGrades'])->middleware(['auth'])->name('storegrades');
