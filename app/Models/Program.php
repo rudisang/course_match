@@ -37,6 +37,11 @@ class Program extends Model
 
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function requirements()
     {
         return $this->hasMany(ProgramRequirement::class);

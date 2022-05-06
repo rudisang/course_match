@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CandidateGrades;
 use App\Models\Program;
 use App\Models\User;
+use App\Models\Comment;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -161,9 +162,45 @@ class DashboardController extends Controller
 
     public function showProgram($id){
         $points = $this->points();
-        $program = Program::with('requirements')->find($id);
-        return view('dashboard.student-views.program.show', compact('program'))->with('points', $points);
+        $program = Program::with('requirements')->withCount('comments')->find($id);
+        $comments = Comment::where('program_id', $id)->get();
+        return view('dashboard.student-views.program.show', compact('program'), compact('comments'))->with('points', $points);
     }
+
+    public function addComment(Request $request, $id){
+        //validate the data
+        $this->validate($request, [
+            'comment' => 'required',
+        ]);
+
+        $program = Program::find($id);
+        if($program != ""){
+            $comment = new Comment();
+        $comment->user_id = auth()->user()->id;
+        $comment->program_id = (int)$id;
+        $comment->comment = $request->comment;
+
+        
+        $comment->save();
+
+
+        return back()->with('success', 'Comment added successfully');
+        }else{
+            return back()->with('error', 'Program not found');
+        }
+        
+    }
+
+    public function removeComment($id){
+        $comment = Comment::find($id);
+        if($comment != ""){
+            $comment->delete();
+            return back()->with('success', 'Comment removed successfully');
+        }else{
+            return back()->with('error', 'Comment not found');
+        }
+    }
+
 
     public function makePDF($id){
         $points = $this->points();
@@ -179,7 +216,11 @@ class DashboardController extends Controller
         //dd($html);
         //PDF::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf');
        $pdf = PDF::loadView('pdf', compact('program'), compact('points'));
-      return $pdf->download('program.pdf');
+       
+       return $pdf->download('program.pdf');
+        
+        
+        //return view('pdf', compact('program'))->with('points', $points);
 
     }
 

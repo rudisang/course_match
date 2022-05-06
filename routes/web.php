@@ -37,6 +37,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/requirement/add', [AdminDashboardController::class, 'addProgramRequirement'])->name('addrequirement');
 });
 
+Route::post('/comment/add/{id}', [DashboardController::class, 'addComment'])->middleware(['auth'])->name('addComment');
+Route::delete('/comment/delete/{id}', [DashboardController::class, 'removeComment'])->middleware(['auth'])->name('removeComment');
+
 Route::get('/dashboard/my-grades', function () {
     return view('dashboard.student-views.mygrades.index');
 })->middleware(['auth'])->name('mygrades');

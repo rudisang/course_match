@@ -7,7 +7,10 @@
     <li class="breadcrumb-item active" style="font-size:18px;font-weight:bold" aria-current="page">{{$program->name}}</li>
 
   </ol>
-  <a href="/dashboard/program/{{$program->id}}/download" class="btn btn-info">Generate PDF</a>
+    <span x-data="{generate:false}">
+        <a x-show="!generate" @click="generate = true; setTimeout(function(){ generate = false }, 6000);" href="/dashboard/program/{{$program->id}}/download" class="btn btn-info">Generate PDF</a>
+        <button x-show="generate;" class="btn btn-info" disabled>Generating... <div style="margin-top:-10px" class="loader"></div></button>
+    </span>
 @endsection
 
 @section('content') 
@@ -91,5 +94,101 @@
     
    
     </section>
+  </section>
+
+  <section class="mb-4">
+    <div class="container mt-5">
+
+        <div class="row  d-flex justify-content-center">
+            <h1 style="text-align:center">Discussion Forum</h1>
+            <form action="/comment/add/{{$program->id}}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="">Post a new comment</label>
+                    <textarea required name="comment" id="" cols="20" rows="8" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+            @if(!$comments->isEmpty())
+          
+            <div class="col-md-8">
+
+                <div class="headings d-flex justify-content-between align-items-center mb-3">
+                    <h5>Comments({{$program->comments_count}})</h5>
+
+                    <div class="buttons">
+
+                        <span class="badge bg-white d-flex flex-row align-items-center">
+                            <span class="text-primary">Comments "ON"</span>
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                              
+                            </div>
+                        </span>
+                        
+                    </div>
+                    
+                </div>
+
+
+                @foreach($comments as $comment)
+                <div class="card comment-card p-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                  <div class="user d-flex flex-row align-items-center">
+                    <span style="margin-right:7px;color:white;width:30px;height:30px;background:rgb(50, 50, 50);border-radius:50%;display:flex;align-items:center;justify-content:center">
+                        {{substr($comment->user->name, 0, 1)}}
+                    </span>
+                    <span><small class="font-weight-bold text-primary">{{$comment->user->name}}</small> <small class="font-weight-bold">{{$comment->comment}}</small></span>
+                      
+                  </div>
+
+
+                  <small>{{$comment->created_at->diffForHumans()}}</small>
+
+                  </div>
+
+
+                  <div class="action d-flex justify-content-between mt-2 align-items-center">
+
+                    <div class="reply px-4">
+                        @if(auth()->user()->id === $comment->user->id)
+                        <form style="display: inline" action="/comment/delete/{{$comment->id}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button style="border:none;background:transparent;display:inline" type="submit"><small>Remove Comment</small>
+                                <span class="dots"></span></button>
+                        </form>
+                        @endif
+                        
+                        <small>Reply</small>
+                        
+                       
+                    </div>
+
+                    <div class="icons align-items-center">
+
+                        
+                        
+                    </div>
+                      
+                  </div>
+                </div>
+                @endforeach
+
+
+            </div>
+            @else
+            <div class="col-md-12 mt-4">
+
+                    <h1 style="text-align: center">No Comments Yet</h1>
+                
+            </div>
+            @endif
+            
+        </div>
+        
+    </div>
   </section>
 @endsection

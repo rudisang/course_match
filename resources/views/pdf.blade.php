@@ -5,82 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{public_path('css/style.css')}}">
+    
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
+        
         body{
             background-color: #f5f5f5;
             font-family: 'Nunito', sans-serif;
         }
 
-        .no-border{
-            border: none;
-        }
-
-        .rounded{
-            border-radius: 10px !important;
-        }
-
-        .side-menu{
-            top:20px;
-            padding: 20px 0;
-            position:relative;
-            min-width:100%;
-            font-size:1.1rem;
-            color:#212529;
-            text-align:left;
-            list-style:none;
-            background-clip:padding-box;
-        }
-
-        .side-item{
-            padding:0.5rem 1rem;
-            display:block;
-            color:inherit;
-            text-decoration:none;
-            border-bottom:1px solid transparent;
-        }
-
-        .btn-filter{
-            border:1px solid rgb(255, 217, 0); 
-            transition: ease-in-out .5s;
-        }
-
-        .btn-filter:hover{
-            background-color: rgb(255, 217, 0);
-            color:rgb(255, 255, 255);
-            font-weight:bold;
-            transition: ease-in-out .5s;
-        }
-
-        .side-item:hover{
-            background-color: #e9e9e9;
-            color: #212529;
-            border-radius:5px;
-            cursor:pointer;
-        }
-
-        .side-active{
-            background-color: #e9e9e9;
-            color: #56a4f1;
-            border-radius:5px;
-        }
+ 
     </style>
     <title>Dashboard</title>
 </head>
 <body>
-    
-    <section class="row mt-3" style="width:100%">
+    <img style="margin-left:40px;margin-top:10px" width=40 src="{{public_path('images/logo.png')}}" alt="ub logo" />
+    <section class="row mt-3" style="width:100%;margin-top:10px">
         
         <div class="col col-sm-12 ">
-            <div class="container">
+            <div style="width:95%;margin-inline:auto">
                 
                 <section>
                     @if($points < $program->min_points)
-                    <div class="mt-2 mb-t alert alert-danger alert-dismissible fade show" role="alert">
-                        You Don't Have The Required POINTS To Apply For This Program.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div style="background:rgba(235, 107, 107, 0.84);padding:50px 30px;border-radius:15px" role="alert">
+                        <h3 style="color:rgb(36, 36, 36)">! You Don't Have The Required POINTS To Apply For This Program.</h3>
                     </div>
                 
                     @else
@@ -103,36 +52,33 @@
                             @endfor
                         
                             @if ($required > 0)
-                                <div class="mt-2 mb-t alert alert-warning alert-dismissible fade show" role="alert">
-                                    <p>Your GCSE Points {{$points}} Meet The Requirements ({{$program->min_points}}points) To Enroll For This Program, However:</p>
-                                    <p>Below are the minimum requirements for this program:</p>
+                                <div style="border-radius:15px;background:rgb(216, 220, 93);padding:20px 30px" role="alert">
+                                    <p style="font-weight:bold">Your GCSE Points {{$points}} Meet The Requirements ({{$program->min_points}}points) To Enroll For This Program, However:</p>
+                                    <p style="font-weight:bold">Below are the minimum requirements for this program:</p>
                                     <ul>
                                         @foreach ($program->requirements as $requirement)
                                             <li>GCSE <strong>{{$requirement->subject}}</strong> With Grade <strong>{{calcGrade($requirement->min_points)}}</strong> - <strong>{{$requirement->min_points}}</strong> Points or Better</li>
                                         @endforeach
                                     </ul>
                                     <p>You May Not Have Done or Met The Required Pass Mark For The Subjects Required For This Program</p>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @else
-                                <div class="mt-2 mb-t alert alert-success alert-dismissible fade show" role="alert">
-                                    You Qualify For This Program
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div style="background:rgb(93, 220, 93);padding:50px 30px;border-radius:15px" role="alert">
+                                    <h1>You Qualify For This Program</h1>
                                 </div>
                             @endif
                             
                         @else
-                        <div class="mt-2 mb-t alert alert-success alert-dismissible fade show" role="alert">
-                            You Qualify For This Program
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div style="background:rgb(93, 220, 93);padding:50px 30px;border-radius:15px" role="alert">
+                            <h1>You Qualify For This Program</h1>
                         </div>
                         @endif
                     
                     @endif
                 
                     
-                  <section class="card no-border rounded shadow-sm mt-3">
-                    <section class="card-body">
+                  <section style="margin-top:20px;background:white;border-radius:15px;padding:30px">
+                    <section >
                         <h3><strong>{{$program->name}}</strong></h3>
                         <hr>
                         <p><strong>{{$program->type}}</strong> <br>
