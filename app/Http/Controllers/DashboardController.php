@@ -150,7 +150,8 @@ class DashboardController extends Controller
         if(auth()->user()->is_admin){
             $programs = Program::all();
             $users = User::all();
-            return view('dashboard.admin.index')->with('programs', $programs)->with('users', $users);
+            $comments = Comment::all();
+            return view('dashboard.admin.index')->with('programs', $programs)->with('comments', $comments)->with('users', $users);
         }else{
             $points = $this->points();
             $programs = Program::latest()->filter(
@@ -163,7 +164,7 @@ class DashboardController extends Controller
     public function showProgram($id){
         $points = $this->points();
         $program = Program::with('requirements')->withCount('comments')->find($id);
-        $comments = Comment::where('program_id', $id)->get();
+        $comments = Comment::where('program_id', $id)->orderBy('created_at', 'DESC')->get();
         return view('dashboard.student-views.program.show', compact('program'), compact('comments'))->with('points', $points);
     }
 
@@ -183,7 +184,7 @@ class DashboardController extends Controller
         
         $comment->save();
 
-
+            sleep(2);
         return back()->with('success', 'Comment added successfully');
         }else{
             return back()->with('error', 'Program not found');

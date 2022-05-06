@@ -96,18 +96,21 @@
     </section>
   </section>
 
-  <section class="mb-4">
+  <section class="mb-4" x-data="{submit:false}">
     <div class="container mt-5">
 
         <div class="row  d-flex justify-content-center">
             <h1 style="text-align:center">Discussion Forum</h1>
-            <form action="/comment/add/{{$program->id}}" method="POST">
+            <form @submit="submit = true;" action="/comment/add/{{$program->id}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="">Post a new comment</label>
                     <textarea required name="comment" id="" cols="20" rows="8" class="form-control"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Post</button>
+                <br>
+                <button x-show="!submit" type="submit" class="btn btn-primary">Post</button>
+                <button x-show="submit" class="btn btn-info" disabled>Posting Comment.. <div style="margin-top:-10px" class="loader"></div></button>
+
             </form>
             @if(!$comments->isEmpty())
           
@@ -132,7 +135,7 @@
 
 
                 @foreach($comments as $comment)
-                <div class="card comment-card p-3">
+                <div class="card comment-card p-3 mt-3">
 
                     <div class="d-flex justify-content-between align-items-center">
 
