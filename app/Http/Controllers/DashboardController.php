@@ -176,11 +176,15 @@ class DashboardController extends Controller
 
         $program = Program::find($id);
         if($program != ""){
-            $comment = new Comment();
+        $comment = new Comment();
         $comment->user_id = auth()->user()->id;
         $comment->program_id = (int)$id;
+        if($request->parent_id != ""){
+            $comment->parent_id = (int)$request->parent_id;
+        }
         $comment->comment = $request->comment;
 
+        
         
         $comment->save();
 

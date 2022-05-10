@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->text('comment');
             $table->foreignId('user_id');
             $table->foreignId('program_id');
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }
