@@ -53,10 +53,11 @@
       @foreach($comments as $comment)
                 @if($comment->parent_id == null)
                 <div class="card comment-card p-3 mt-3">
-
+                  <span class="mb-2">From Course: <strong>{{$comment->program->name}}</strong></span>
                     <div class="d-flex justify-content-between align-items-center">
 
                   <div class="user d-flex flex-row align-items-center">
+                    
                     <span style="margin-right:7px;color:white;width:30px;height:30px;background:rgb(50, 50, 50);border-radius:50%;display:flex;align-items:center;justify-content:center">
                         {{substr($comment->user->name, 0, 1)}}
                     </span>
@@ -90,8 +91,8 @@
                                     <label for="">Post a reply</label>
                                     <input type="hidden" name="parent_id" value="{{$comment->id}}">
                                     <input style="display:inline" type="text" required name="comment" class="mb-1 form-control" />
-                                    <button x-show="!submit" type="submit" class="btn btn-primary">send</button>
-                                <button x-show="submit" class="btn btn-info" disabled>Replying to Comment.. <div style="margin-top:-10px" class="loader"></div></button>
+                                    <button x-show="!submit" type="submit" class="btn btn-primary">Send</button>
+                                    <button x-show="submit" class="btn btn-info" disabled>Replying... <div style="margin-top:-10px" class="loader"></div></button>
                                 </div>
                                 
                                 
